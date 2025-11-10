@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gestor de Productos</title>
+  <meta name="description" content="Plataforma demo para gestión de productos con roles y permisos en Django." />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <!-- Navbar -->
+  <header class="border-b bg-white">
+    <div class="mx-auto max-w-7xl px-4 py-4 flex items-center justify-between">
+      <a href="/" class="text-xl font-extrabold tracking-tight">Gestor<span class="text-indigo-600">Pro</span></a>
+      <nav class="flex items-center gap-4 text-sm">
+        <a href="/" class="hover:text-indigo-600">Inicio</a>
+        <a href="/admin/" class="hover:text-indigo-600">Administración</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="mx-auto max-w-7xl px-4 py-14 grid md:grid-cols-2 gap-10 items-center">
+    <div>
+      <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
+        Plataforma <span class="text-indigo-600">profesional</span> para gestionar tus productos
+      </h1>
+      <p class="mt-4 text-slate-600">
+        Crea, edita y controla el inventario con permisos por rol: Administradores, Gestores de Productos y Usuarios.
+      </p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="/admin/" class="inline-block rounded-2xl px-5 py-3 bg-indigo-600 text-white font-medium hover:bg-indigo-700">
+          Ir al panel administrativo
+        </a>
+        <a href="#catalogo" class="inline-block rounded-2xl px-5 py-3 border border-slate-300 hover:bg-white font-medium">
+          Ver catálogo
+        </a>
+      </div>
+      <p class="mt-3 text-xs text-slate-500">Para pruebas: gestor1/demo12345 (sin borrar) • Crea tu superusuario para control total.</p>
+    </div>
+    <div class="bg-white rounded-3xl p-6 shadow">
+      <div class="aspect-video rounded-2xl bg-gradient-to-br from-indigo-50 to-slate-50 flex items-center justify-center">
+        <div class="text-center p-6">
+          <div class="text-6xl">🗂️</div>
+          <p class="mt-3 font-semibold">Admin de Productos</p>
+          <p class="text-sm text-slate-500">CRUD con permisos y grupos</p>
+        </div>
+      </div>
+      <ul class="mt-6 grid sm:grid-cols-2 gap-3 text-sm">
+        <li class="p-3 rounded-xl bg-slate-100">✔️ Roles por grupo</li>
+        <li class="p-3 rounded-xl bg-slate-100">✔️ Permisos granulares</li>
+        <li class="p-3 rounded-xl bg-slate-100">✔️ Productos demo</li>
+        <li class="p-3 rounded-xl bg-slate-100">✔️ Acceso seguro</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Catálogo -->
+  <section id="catalogo" class="mx-auto max-w-7xl px-4 pb-16">
+    <div class="flex items-end justify-between">
+      <h2 class="text-2xl font-bold">Productos destacados</h2>
+      <a href="/admin/productos/producto/" class="text-indigo-600 hover:underline text-sm">Gestionar en admin →</a>
+    </div>
+
+    {% if productos %}
+      <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {% for p in productos %}
+          <article class="bg-white rounded-2xl shadow hover:shadow-md transition p-5">
+            <h3 class="font-semibold line-clamp-2">{{ p.nombre }}</h3>
+            <p class="mt-2 text-sm text-slate-600 line-clamp-3">{{ p.descripcion }}</p>
+            <div class="mt-4 flex items-center justify-between">
+              <span class="text-lg font-bold">${{ p.precio }}</span>
+              <span class="text-xs text-slate-500">Stock: {{ p.stock }}</span>
+            </div>
+            <p class="mt-1 text-[11px] text-slate-400">Creado: {{ p.fecha_creacion|date:"d/m/Y H:i" }}</p>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="mt-6 text-slate-600">Aún no hay productos cargados. Puedes crearlos desde el panel de administración.</p>
+    {% endif %}
+  </section>
+
+  <footer class="border-t py-6 text-center text-sm text-slate-500">
+    &copy; {% now "Y" %} GestorPro — Demo académica con Django.
+  </footer>
+</body>
+</html>
